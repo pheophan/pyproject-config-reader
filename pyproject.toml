@@ -1,0 +1,39 @@
+[project]
+name = "pyproject-config-reader"
+description = "PyProject Config Reader"
+version = "0.1.0"
+
+requires-python = ">= 3.11"
+classifiers = [
+    "Development Status :: 1 - Permanent Beta",
+    "Programming Language :: Python"
+]
+
+dependencies = [
+    'PyYAML',
+    'python-dotenv',
+    'jmespath'
+]
+
+[build-system]
+requires = [
+    "setuptools @ git+https://github.com/pypa/setuptools",
+    "wheel >= 0.42"
+]
+build-backend = "setuptools.build_meta"
+
+
+[tool.setuptools]
+packages = [
+    'pyproject_config_reader'
+]
+
+
+[project.scripts]
+#otmoto_check_ads = ''
+
+
+[tool.setuptools.package-data]
+#"tlg.img_processing.recognition" = [
+#    "*.h5", "*.txt"
+#]
