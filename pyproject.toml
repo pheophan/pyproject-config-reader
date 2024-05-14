@@ -30,7 +30,7 @@ packages = [
 
 
 [project.scripts]
-#otmoto_check_ads = ''
+config_init = 'pyproject_config_reader.reader:init'
 
 
 [tool.setuptools.package-data]
