@@ -6,8 +6,11 @@ from pathlib import Path
 import jmespath as jp
 import yaml
 from dotenv import load_dotenv
+from logging import getLogger
 
 load_dotenv('project.env')
+
+logger = getLogger(__name__)
 
 
 def running_under_jupyter():
@@ -45,6 +48,17 @@ def get_config(node_path: str, *, conf_string_delimiter: str = None, strict: boo
         return config
 
     return str(conf_string_delimiter).join(f'{k}={v}' for k, v in config.items())
+
+
+def init():
+    project_dir = Path(os.getenv('VIRTUAL_ENV')).parent.parent.resolve()
+    project_env_file = project_dir / 'project.env'
+
+    if not project_env_file.exists():
+        project_env_file.write_text('CONFIG_PATH=\n')
+        logger.info('default env file was created')
+    else:
+        logger.info('default env file was found')
 
 
 __all__ = [
