@@ -1,16 +1,15 @@
+import logging
 import os
 import platform
 import stat
+import sys
 from pathlib import Path
 
 import jmespath as jp
 import yaml
 from dotenv import load_dotenv
-from logging import getLogger
 
 load_dotenv('project.env')
-
-logger = getLogger(__name__)
 
 
 def running_under_jupyter():
@@ -51,14 +50,21 @@ def get_config(node_path: str, *, conf_string_delimiter: str = None, strict: boo
 
 
 def init():
-    project_dir = Path(os.getenv('VIRTUAL_ENV')).parent.parent.resolve()
+    project_dir = Path(os.getenv('VIRTUAL_ENV')).parent.resolve()
     project_env_file = project_dir / 'project.env'
+
+    logger = logging.getLogger('pyproject')
+    # logger.setLevel(logging.DEBUG)
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                        datefmt='%Y-%m-%d %H:%M:%S %p', stream=sys.stdout)
+
+    logger.info('PyProject logging is disabled')
 
     if not project_env_file.exists():
         project_env_file.write_text('CONFIG_PATH=\n')
-        logger.info('default env file was created')
+        logger.info('default env file was created as {}'.format(project_env_file))
     else:
-        logger.info('default env file was found')
+        logger.warning('default env file was found')
 
 
 __all__ = [
